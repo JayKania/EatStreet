@@ -12,6 +12,14 @@
   --light-grey-brown: rgb(171, 171, 171);
   --light-border: rgb(201, 201, 201);
   --light-font-color: rgb(201, 201, 201);
+  --light-green: rgb(207, 221, 219);
+  --dark-green: rgb(194, 233, 220);
+  --light-purple:rgb(228, 205, 237);
+  --dark-purple: rgb(201, 202, 239);
+  --light-pink: rgb(240, 200, 208);
+  --dark-pink: rgb(250, 193, 217);
+  --light-blue: rgb(194, 219, 232);
+  --dark-blue: rgb(146, 189, 212);
   font-size: 10px;
   font-family: 'Inter', sans-serif;
 }

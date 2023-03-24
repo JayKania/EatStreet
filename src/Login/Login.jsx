@@ -24,7 +24,7 @@ const Login = () => {
   useEffect(() => {
     const goToMenu = () => {
       if (pin === "1234") {
-        navigate("/menu");
+        navigate("/home");
       } else if (pin.length === 4) {
         setPinErr(true);
       }
@@ -44,7 +44,11 @@ const Login = () => {
   let pinPadHtml = [];
   for (let i = 1; i <= 10; i++) {
     pinPadHtml.push(
-      <div className="button" onClick={() => pinHandler(i === 10 ? 0 : i)}>
+      <div
+        className="button"
+        onClick={() => pinHandler(i === 10 ? 0 : i)}
+        key={i === 10 ? 0 : i}
+      >
         <span>{`${i === 10 ? 0 : i}`}</span>
       </div>
     );
@@ -104,7 +108,7 @@ const Login = () => {
 };
 
 const StyledLogin = styled.div`
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
 `;

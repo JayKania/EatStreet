@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { FaHamburger } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-const Sidebar = () => {
-  const [activeLink, setActiveLink] = useState("menu");
-
+const Sidebar = ({ activeLink, setActiveLink }) => {
   const linkHandler = (link) => {
     setActiveLink(link);
   };
@@ -17,16 +14,24 @@ const Sidebar = () => {
         <span>ResPOS</span>
       </div>
       <div
-        className={`side-menu-item ${activeLink === "menu" ? "active" : ""}`}
-        onClick={() => linkHandler("menu")}
+        className={`side-menu-item ${
+          activeLink === "restaurants" ? "active" : ""
+        }`}
+        onClick={() => linkHandler("restaurants")}
       >
-        Menu
+        Restaurants
       </div>
       <div
         className={`side-menu-item ${activeLink === "orders" ? "active" : ""}`}
         onClick={() => linkHandler("orders")}
       >
         Orders
+      </div>
+      <div
+        className={`side-menu-item ${activeLink === "cart" ? "active" : ""}`}
+        onClick={() => linkHandler("cart")}
+      >
+        Cart
       </div>
     </StyledSidebar>
   );
@@ -35,10 +40,9 @@ const Sidebar = () => {
 const StyledSidebar = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   color: var(--white);
   padding: 3rem;
-  padding-top: 4rem;
+  padding-top: 5rem;
   gap: 2rem;
   .side-menu-logo {
     font-size: 2rem;
