@@ -5,8 +5,16 @@ import MenuItems from "./MenuItems";
 import axios from "axios";
 import { BiLeftArrowAlt } from "react-icons/bi";
 
-const Menu = ({ allData, res_id, restaurantHandler }) => {
-  const [selectedRestaurantData, setSelectedRestaurantData] = useState(null);
+const Menu = ({
+  allData,
+  res_id,
+  restaurantHandler,
+  cartData,
+  increaseQtyHandler,
+  decreaseQtyHandler,
+  selectedRestaurantData,
+  setSelectedRestaurantData,
+}) => {
   const [selectedCategory, setSelectedCategory] = useState("breakfast");
   const [categoryData, setCategoryData] = useState([]);
 
@@ -80,6 +88,10 @@ const Menu = ({ allData, res_id, restaurantHandler }) => {
       <MenuItems
         categoryData={categoryData}
         selectedCategory={selectedCategory}
+        increaseQtyHandler={increaseQtyHandler}
+        decreaseQtyHandler={decreaseQtyHandler}
+        cartData={cartData}
+        selectedRestaurantData={selectedRestaurantData}
       />
     </StyledMenu>
   );

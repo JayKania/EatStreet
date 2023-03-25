@@ -15,6 +15,7 @@ const App = () => {
 };
 
 const StyledApp = styled.div`
+  min-height: 100vh;
   background-color: var(--black);
 `;
 

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { GoLocation } from "react-icons/go";
 
 const Restaurants = ({ allData, restaurantHandler }) => {
-  console.log(allData);
   if (allData.length === 0) {
     return <h2 style={{ color: "var(--white)" }}>Loading</h2>;
   }

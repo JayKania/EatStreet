@@ -1,19 +1,108 @@
 import React from "react";
 import styled from "styled-components";
 
-const MenuItems = ({ categoryData, selectedCategory }) => {
-  const menuItemsHtml = categoryData.map((item) => {
-    return (
-      <div className={`menu-item ${selectedCategory}`} key={item.id}>
-        <div className="item-name">{item.name}</div>
-        <div className="item-price">${item.price}.00</div>
-        <div className="item-qty-wrapper">
-          <button className="item-inc-btn">+</button>
-          <span>0</span>
-          <button className="item-dec-btn">-</button>
+const MenuItems = ({
+  categoryData,
+  selectedCategory,
+  cartData,
+  increaseQtyHandler,
+  decreaseQtyHandler,
+  selectedRestaurantData,
+}) => {
+  let menuItemsHtml = null;
+
+  menuItemsHtml = categoryData.map((item) => {
+    // 1. check if the current restaurant is in the cart or not
+    // 2. if no -> item_qty = 0, if yes -> check if this menu_item is in the cart or not and get the quantity
+    let res_index = cartData.findIndex((res) => {
+      return res.res_id === selectedRestaurantData.res_id;
+    });
+
+    if (res_index === -1) {
+      return (
+        <div className={`menu-item ${selectedCategory}`} key={item.id}>
+          <div className="item-name">{item.name}</div>
+          <div className="item-price">${item.price}.00</div>
+          <div className="item-qty-wrapper">
+            <button
+              className="item-inc-btn"
+              onClick={() =>
+                increaseQtyHandler({
+                  action: "increase",
+                  item_name: item.name,
+                  item_price: item.price,
+                })
+              }
+            >
+              +
+            </button>
+            <span>0</span>
+            <button className="item-dec-btn">-</button>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      let menu_item_index = cartData[res_index].cart_items.findIndex(
+        (cartItem) => {
+          return cartItem.item_name === item.name;
+        }
+      );
+      if (menu_item_index === -1) {
+        return (
+          <div className={`menu-item ${selectedCategory}`} key={item.id}>
+            <div className="item-name">{item.name}</div>
+            <div className="item-price">${item.price}.00</div>
+            <div className="item-qty-wrapper">
+              <button
+                className="item-inc-btn"
+                onClick={() =>
+                  increaseQtyHandler({
+                    item_name: item.name,
+                    item_price: item.price,
+                  })
+                }
+              >
+                +
+              </button>
+              <span>0</span>
+              <button className="item-dec-btn">-</button>
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div className={`menu-item ${selectedCategory}`} key={item.id}>
+            <div className="item-name">{item.name}</div>
+            <div className="item-price">${item.price}.00</div>
+            <div className="item-qty-wrapper">
+              <button
+                className="item-inc-btn"
+                onClick={() =>
+                  increaseQtyHandler({
+                    action: "increase",
+                    item_name: item.name,
+                    item_price: item.price,
+                  })
+                }
+              >
+                +
+              </button>
+              <span>
+                {cartData[res_index].cart_items[menu_item_index].item_qty}
+              </span>
+              <button
+                className="item-dec-btn"
+                onClick={() => decreaseQtyHandler({ item_name: item.name })}
+              >
+                -
+              </button>
+            </div>
+          </div>
+        );
+      }
+    }
+
+    // cartData
   });
 
   return <StyledMenuItems>{menuItemsHtml}</StyledMenuItems>;
