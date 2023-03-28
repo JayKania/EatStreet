@@ -1,12 +1,11 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { BiLeftArrowAlt } from "react-icons/bi";
 import styled from "styled-components";
 import Categories from "./Categories";
 import MenuItems from "./MenuItems";
-import axios from "axios";
-import { BiLeftArrowAlt } from "react-icons/bi";
 
 const Menu = ({
-  allData,
   res_id,
   restaurantHandler,
   cartData,
@@ -76,8 +75,12 @@ const Menu = ({
 
   return (
     <StyledMenu>
-      <div className="back-btn" onClick={() => restaurantHandler(null)}>
-        <BiLeftArrowAlt />
+      <div className="name-back-btn-wrapper">
+        <BiLeftArrowAlt
+          className="back-btn"
+          onClick={() => restaurantHandler(null)}
+        />
+        <div className="res-name">{selectedRestaurantData?.res_name}</div>
       </div>
       <Categories
         categoryHandler={categoryHandler}
@@ -100,12 +103,21 @@ const Menu = ({
 const StyledMenu = styled.div`
   overflow: scroll;
   padding: 2rem;
-  .back-btn {
-    color: var(--white);
-    font-size: 4rem;
-    font-weight: 200;
-    :hover {
-      cursor: pointer;
+  .name-back-btn-wrapper {
+    display: flex;
+    align-items: center;
+    .back-btn {
+      color: var(--white);
+      font-size: 4rem;
+      font-weight: 200;
+      :hover {
+        cursor: pointer;
+      }
+    }
+    .res-name {
+      color: var(--white);
+      font-size: 2rem;
+      padding-left: 1rem;
     }
   }
   hr {

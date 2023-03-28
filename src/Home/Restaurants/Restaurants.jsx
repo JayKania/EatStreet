@@ -2,50 +2,49 @@ import React from "react";
 import styled from "styled-components";
 import { GoLocation } from "react-icons/go";
 
-const Restaurants = ({ allData, restaurantHandler }) => {
-  if (allData.length === 0) {
+const Restaurants = ({ allRestaurants, restaurantHandler }) => {
+  if (allRestaurants.length === 0) {
     return <h2 style={{ color: "var(--white)" }}>Loading</h2>;
   }
 
-  let restaurantsData = [];
+  let restaurantsHtml = [];
 
-  for (let i = 0; i < allData.length; i++) {
-    restaurantsData.push(
+  for (let i = 0; i < allRestaurants.length; i++) {
+    restaurantsHtml.push(
       <div
         className="res-card"
-        key={allData[i].res_id}
-        id={allData[i].res_id}
-        onClick={() => restaurantHandler(allData[i].res_id)}
+        key={allRestaurants[i].res_id}
+        id={allRestaurants[i].res_id}
+        onClick={() => restaurantHandler(allRestaurants[i].res_id)}
       >
         <div className="res-img-wrapper">
-          <img src={allData[i].res_img} alt="res_img" />
+          <img src={allRestaurants[i].res_img} alt="res_img" />
         </div>
         <div className="res-content">
-          <div className="res-name">{allData[i].res_name}</div>
+          <div className="res-name">{allRestaurants[i].res_name}</div>
           <div className="res-location">
             <GoLocation />
-            <span>{allData[i].res_location}</span>
+            <span>{allRestaurants[i].res_location}</span>
           </div>
           <div className="res-cusines">
-            <div>{allData[i].res_cusines[0]}</div>
-            <div>{allData[i].res_cusines[1]}</div>
-            <div>{allData[i].res_cusines[2]}</div>
+            <div>{allRestaurants[i].res_cusines[0]}</div>
+            <div>{allRestaurants[i].res_cusines[1]}</div>
+            <div>{allRestaurants[i].res_cusines[2]}</div>
           </div>
         </div>
       </div>
     );
   }
 
-  return <StyledRestaurants>{restaurantsData}</StyledRestaurants>;
+  return <StyledRestaurants>{restaurantsHtml}</StyledRestaurants>;
 };
 
 const StyledRestaurants = styled.div`
   color: var(--white);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
-  padding: 2rem;
-  padding-top: 4rem;
+  padding: 4rem 3rem 2rem 3rem;
   .res-card {
     border-left: 1rem solid var(--dark-green);
     border-radius: 20px;

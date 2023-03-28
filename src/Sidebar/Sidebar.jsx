@@ -1,12 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaHamburger } from "react-icons/fa";
 import styled from "styled-components";
 
-const Sidebar = ({ activeLink, setActiveLink }) => {
-  const linkHandler = (link) => {
-    setActiveLink(link);
-  };
-
+const Sidebar = ({ activeLink, activeLinkHandler }) => {
   return (
     <StyledSidebar>
       <div className="side-menu-logo">
@@ -17,21 +13,21 @@ const Sidebar = ({ activeLink, setActiveLink }) => {
         className={`side-menu-item ${
           activeLink === "restaurants" ? "active" : ""
         }`}
-        onClick={() => linkHandler("restaurants")}
+        onClick={() => activeLinkHandler("restaurants")}
       >
         Restaurants
       </div>
       <div
-        className={`side-menu-item ${activeLink === "orders" ? "active" : ""}`}
-        onClick={() => linkHandler("orders")}
-      >
-        Orders
-      </div>
-      <div
         className={`side-menu-item ${activeLink === "cart" ? "active" : ""}`}
-        onClick={() => linkHandler("cart")}
+        onClick={() => activeLinkHandler("cart")}
       >
         Cart
+      </div>
+      <div
+        className={`side-menu-item ${activeLink === "orders" ? "active" : ""}`}
+        onClick={() => activeLinkHandler("orders")}
+      >
+        Orders
       </div>
     </StyledSidebar>
   );

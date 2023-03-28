@@ -20,6 +20,7 @@
   --dark-pink: rgb(250, 193, 217);
   --light-blue: rgb(194, 219, 232);
   --dark-blue: rgb(146, 189, 212);
+  --error: rgb(227, 237, 38);
   font-size: 10px;
   font-family: 'Inter', sans-serif;
 }

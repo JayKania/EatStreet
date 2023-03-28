@@ -8,7 +8,7 @@ import Restaurants from "./Restaurants/Restaurants";
 import Orders from "./Orders/Orders";
 
 const Home = () => {
-  const [allData, setAllData] = useState([]);
+  const [allRestaurants, setAllRestaurants] = useState([]);
   const [activeLink, setActiveLink] = useState("restaurants");
   const [selectedRestaurantId, setSelectedRestaurantId] = useState(null);
   const [cartData, setCartData] = useState([]);
@@ -20,7 +20,7 @@ const Home = () => {
         `${process.env.REACT_APP_API_URL}/restaurants`
       );
       // console.log(result.data);
-      setAllData([...result.data]);
+      setAllRestaurants([...result.data]);
     };
     getData();
   }, []);
@@ -28,6 +28,10 @@ const Home = () => {
   const restaurantHandler = (res_id) => {
     setSelectedRestaurantId(res_id);
     // console.log(res_id)
+  };
+
+  const activeLinkHandler = (link) => {
+    setActiveLink(link);
   };
 
   const increaseQtyHandler = (data) => {
@@ -119,20 +123,34 @@ const Home = () => {
     setCartData([...tempCartData]);
   };
 
+  const editCartHandler = (res_id) => {
+    activeLinkHandler("restaurants");
+    restaurantHandler(res_id);
+  };
+
+  const deleteCartHandler = (res_id) => {
+    let tempData = cartData.filter((cartItem) => {
+      return cartItem.res_id !== res_id;
+    });
+    setCartData([...tempData]);
+  };
+
   let activeComponent = null;
   if (activeLink === "restaurants") {
     if (!selectedRestaurantId) {
       activeComponent = (
-        <Restaurants allData={allData} restaurantHandler={restaurantHandler} />
+        <Restaurants
+          allRestaurants={allRestaurants}
+          restaurantHandler={restaurantHandler}
+        />
       );
     } else {
-      allData.find((res) => {
+      allRestaurants.find((res) => {
         return res.res_id === setSelectedRestaurantId;
       });
       activeComponent = (
         <Menu
           res_id={selectedRestaurantId}
-          allData={allData}
           restaurantHandler={restaurantHandler}
           cartData={cartData}
           increaseQtyHandler={increaseQtyHandler}
@@ -143,21 +161,20 @@ const Home = () => {
       );
     }
   } else if (activeLink === "orders") {
-    activeComponent = <Orders allData={allData} />;
+    activeComponent = <Orders allRestaurants={allRestaurants} />;
   } else if (activeLink === "cart") {
     activeComponent = (
       <Cart
-        allData={allData}
         cartData={cartData}
-        increaseQtyHandler={increaseQtyHandler}
-        decreaseQtyHandler={decreaseQtyHandler}
+        editCartHandler={editCartHandler}
+        deleteCartHandler={deleteCartHandler}
       />
     );
   }
 
   return (
     <StyledHome>
-      <Sidebar activeLink={activeLink} setActiveLink={setActiveLink} />
+      <Sidebar activeLink={activeLink} activeLinkHandler={activeLinkHandler} />
       {activeComponent}
     </StyledHome>
   );
@@ -165,7 +182,7 @@ const Home = () => {
 
 const StyledHome = styled.div`
   display: grid;
-  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-columns: 1fr 5fr;
 `;
 
 export default Home;
