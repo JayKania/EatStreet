@@ -1,8 +1,10 @@
 import React from "react";
 import { FaHamburger } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Sidebar = ({ activeLink, activeLinkHandler }) => {
+  const navigate = useNavigate();
   return (
     <StyledSidebar>
       <div className="side-menu-logo">
@@ -29,6 +31,14 @@ const Sidebar = ({ activeLink, activeLinkHandler }) => {
       >
         Orders
       </div>
+      <div
+        className={`side-menu-item logout`}
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        Logout
+      </div>
     </StyledSidebar>
   );
 };
@@ -40,6 +50,10 @@ const StyledSidebar = styled.div`
   padding: 3rem;
   padding-top: 5rem;
   gap: 2rem;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 15%;
   .side-menu-logo {
     font-size: 2rem;
     display: flex;
@@ -59,6 +73,11 @@ const StyledSidebar = styled.div`
     &.active {
       background-color: var(--dark-grey);
       color: var(--white);
+    }
+    &.logout {
+      margin-top: auto;
+      color: var(--white);
+      text-decoration: none;
     }
     :hover {
       cursor: pointer;

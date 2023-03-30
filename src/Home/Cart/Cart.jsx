@@ -8,6 +8,8 @@ const Cart = ({ cartData, editCartHandler, deleteCartHandler }) => {
     return <h2>Loading</h2>;
   }
 
+  const paymentHandler = () => {};
+
   const cartHtml = cartData.map((cart) => {
     let total = 0;
     const itemsHtml = cart.cart_items.map((item) => {
@@ -67,6 +69,7 @@ const StyledCart = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1.7rem;
   padding: 4rem 3rem 2rem 3rem;
+  margin-left: 15%;
   .cart-wrapper {
     background-color: var(--dark-grey);
     border-radius: 20px;

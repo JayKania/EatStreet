@@ -3,10 +3,6 @@ import styled from "styled-components";
 import { GoLocation } from "react-icons/go";
 
 const Restaurants = ({ allRestaurants, restaurantHandler }) => {
-  if (allRestaurants.length === 0) {
-    return <h2 style={{ color: "var(--white)" }}>Loading</h2>;
-  }
-
   let restaurantsHtml = [];
 
   for (let i = 0; i < allRestaurants.length; i++) {
@@ -36,7 +32,15 @@ const Restaurants = ({ allRestaurants, restaurantHandler }) => {
     );
   }
 
-  return <StyledRestaurants>{restaurantsHtml}</StyledRestaurants>;
+  return (
+    <StyledRestaurants>
+      {allRestaurants.length === 0 ? (
+        <h2 style={{ color: "var(--white)" }}>Loading</h2>
+      ) : (
+        restaurantsHtml
+      )}
+    </StyledRestaurants>
+  );
 };
 
 const StyledRestaurants = styled.div`
@@ -45,6 +49,8 @@ const StyledRestaurants = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
   padding: 4rem 3rem 2rem 3rem;
+  margin-left: 15%;
+
   .res-card {
     border-left: 1rem solid var(--dark-green);
     border-radius: 20px;

@@ -25,7 +25,7 @@ const Signup = () => {
     event.preventDefault();
     try {
       const result = await axios.post(
-        process.env.REACT_APP_API_URL + "/users",
+        process.env.REACT_APP_API_URL + "/signup",
         {
           username,
           email,
@@ -33,10 +33,11 @@ const Signup = () => {
         }
       );
       if (result.status === 200) {
+        window.localStorage.setItem("email", email);
         navigate("/home");
       }
     } catch (err) {
-      console.error(err.response.data.message);
+      //   console.error(err.response.data.message);
       setError(err.response.data.message);
     }
   };

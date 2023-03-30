@@ -103,6 +103,7 @@ const Menu = ({
 const StyledMenu = styled.div`
   overflow: scroll;
   padding: 2rem;
+  margin-left: 15%;
   .name-back-btn-wrapper {
     display: flex;
     align-items: center;

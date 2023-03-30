@@ -181,8 +181,9 @@ const Home = () => {
 };
 
 const StyledHome = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 5fr;
+  /* display: grid;
+  grid-template-columns: 1fr 5fr; */
+  position: relative;
 `;
 
 export default Home;

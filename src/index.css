@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+body {
+  scroll-behavior: smooth;
+  overscroll-behavior-y: none;
+}
+
 :root {
   --black: rgb(17, 19, 21);
   --dark-grey: rgb(41, 44, 45);
