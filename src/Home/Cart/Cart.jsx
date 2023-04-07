@@ -2,13 +2,30 @@ import React from "react";
 import styled from "styled-components";
 import { MdOutlineDelete } from "react-icons/md";
 import { BiEditAlt } from "react-icons/bi";
+import axios from "axios";
 
-const Cart = ({ cartData, editCartHandler, deleteCartHandler }) => {
+const Cart = ({
+  cartData,
+  editCartHandler,
+  deleteCartHandler,
+  ordersData,
+  setOrdersData,
+}) => {
   if (!cartData) {
     return <h2>Loading</h2>;
   }
 
-  const paymentHandler = () => {};
+  const paymentHandler = async (cart) => {
+    // await axios.post(`${process.env.REACT_APP_API_URL}/order`, {
+    //   cart,
+    //   email: window.localStorage.getItem("email"),
+    // });
+    const order_items = [...cart.cart_items];
+    const tempCart = { ...cart };
+    delete tempCart.cart_items;
+    setOrdersData([...ordersData, { ...tempCart, order_items }]);
+    deleteCartHandler(cart.res_id);
+  };
 
   const cartHtml = cartData.map((cart) => {
     let total = 0;
@@ -54,7 +71,9 @@ const Cart = ({ cartData, editCartHandler, deleteCartHandler }) => {
           >
             <BiEditAlt />
           </div>
-          <div className="cart-payment">Payment</div>
+          <div className="cart-payment" onClick={() => paymentHandler(cart)}>
+            Place Order
+          </div>
         </div>
       </div>
     );

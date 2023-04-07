@@ -1,10 +1,21 @@
+import axios from "axios";
 import React from "react";
 import { FaHamburger } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Sidebar = ({ activeLink, activeLinkHandler }) => {
   const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    const result = await axios.post(process.env.REACT_APP_API_URL + "/logout", {
+      email: window.localStorage.getItem("email"),
+    });
+    navigate("/");
+    window.localStorage.clear();
+    console.log(result);
+  };
+
   return (
     <StyledSidebar>
       <div className="side-menu-logo">
@@ -31,12 +42,7 @@ const Sidebar = ({ activeLink, activeLinkHandler }) => {
       >
         Orders
       </div>
-      <div
-        className={`side-menu-item logout`}
-        onClick={() => {
-          navigate("/");
-        }}
-      >
+      <div className={`side-menu-item logout`} onClick={logoutHandler}>
         Logout
       </div>
     </StyledSidebar>

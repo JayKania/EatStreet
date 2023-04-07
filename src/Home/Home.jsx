@@ -13,16 +13,20 @@ const Home = () => {
   const [selectedRestaurantId, setSelectedRestaurantId] = useState(null);
   const [cartData, setCartData] = useState([]);
   const [selectedRestaurantData, setSelectedRestaurantData] = useState(null);
+  const [ordersData, setOrdersData] = useState([]);
 
   useEffect(() => {
-    const getData = async () => {
-      const result = await axios.get(
+    const getAllData = async () => {
+      let result = await axios.get(
         `${process.env.REACT_APP_API_URL}/restaurants`
       );
-      // console.log(result.data);
       setAllRestaurants([...result.data]);
+      result = await axios.post(`${process.env.REACT_APP_API_URL}/orders`, {
+        email: window.localStorage.getItem("email"),
+      });
+      setOrdersData([...result.data.orders]);
     };
-    getData();
+    getAllData();
   }, []);
 
   const restaurantHandler = (res_id) => {
@@ -161,13 +165,15 @@ const Home = () => {
       );
     }
   } else if (activeLink === "orders") {
-    activeComponent = <Orders allRestaurants={allRestaurants} />;
+    activeComponent = <Orders ordersData={ordersData} />;
   } else if (activeLink === "cart") {
     activeComponent = (
       <Cart
         cartData={cartData}
         editCartHandler={editCartHandler}
         deleteCartHandler={deleteCartHandler}
+        ordersData={ordersData}
+        setOrdersData={setOrdersData}
       />
     );
   }
