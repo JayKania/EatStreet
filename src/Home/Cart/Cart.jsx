@@ -16,10 +16,10 @@ const Cart = ({
   }
 
   const paymentHandler = async (cart) => {
-    // await axios.post(`${process.env.REACT_APP_API_URL}/order`, {
-    //   cart,
-    //   email: window.localStorage.getItem("email"),
-    // });
+    await axios.post(`${process.env.REACT_APP_API_URL}/order`, {
+      cart,
+      email: window.localStorage.getItem("email"),
+    });
     const order_items = [...cart.cart_items];
     const tempCart = { ...cart };
     delete tempCart.cart_items;
