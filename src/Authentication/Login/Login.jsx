@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { MdEmail, MdLockOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -8,23 +8,39 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const adminRef = useRef(null);
 
   const navigate = useNavigate();
 
   const submitHandler = async (event) => {
     event.preventDefault();
     try {
-      const result = await axios.post(
-        process.env.REACT_APP_API_URL + "/login",
-        {
-          email,
-          password,
+      if (!adminRef.current.checked) {
+        const result = await axios.post(
+          process.env.REACT_APP_API_URL + "/login",
+          {
+            email,
+            password,
+          }
+        );
+        console.log(result);
+        if (result.status === 200) {
+          window.localStorage.setItem("email", email);
+          navigate("/home");
         }
-      );
-      console.log(result);
-      if (result.status === 200) {
-        window.localStorage.setItem("email", email);
-        navigate("/home");
+      } else {
+        const result = await axios.post(
+          process.env.REACT_APP_API_URL + "/admin/login",
+          {
+            email,
+            password,
+          }
+        );
+        console.log(result);
+        if (result.status === 200) {
+          window.localStorage.setItem("email", email);
+          navigate("/admin");
+        }
       }
     } catch (err) {
       setError(err.response.data.message);
@@ -76,6 +92,10 @@ const Login = () => {
               onChange={inputHandler}
             />
           </div>
+        </div>
+        <div className="admin-login-wrapper">
+          <input type="checkbox" name="admin" id="admin" ref={adminRef} />
+          <span>Admin Login</span>
         </div>
         <div className="signup-link-wrapper">
           <span>Create a new account.</span>
@@ -139,6 +159,16 @@ const StyledLogin = styled.form`
           color: var(--light-grey-brown);
         }
       }
+    }
+  }
+
+  .admin-login-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.2rem;
+    input {
+      accent-color: var(--dark-grey-brown);
     }
   }
   .signup-link-wrapper {

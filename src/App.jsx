@@ -5,6 +5,7 @@ import Menu from "./Home/Home";
 import Signup from "./Authentication/Signup/Signup";
 import ProtectedRoute from "./Authentication/ProtectedRoute";
 import CheckUser from "./Authentication/CheckUser";
+import Admin from "./Admin/Admin";
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
             </CheckUser>
           }
         />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </StyledApp>
   );
